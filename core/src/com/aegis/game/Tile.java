@@ -6,11 +6,34 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Tile {
+	//TODO: (Forer, 3/1/2016: Make this damn code ROW COLUMN not column row)
 	public Texture tileImg;
-	Object heldObject;
+	boolean isSelected;
+	public boolean highlightingTile;
+	static Texture emptyTile;
+	static Texture selected;
+	static Texture highlighted;
+	public Object heldObject;
+	
 	
 	public Tile () {
-		tileImg = new Texture("good-tile.png");
+			if (emptyTile == null) {
+				emptyTile = new Texture("good-tile.png");
+				selected = new Texture("selected.png");
+				highlighted = new Texture("selected2.png");
+			}
+			
+			updateTexture();
+	}
+	
+	Texture getTexture() {
+		if (isSelected) return selected;
+		if (highlightingTile) return highlighted;
+		return emptyTile;
+	}
+	
+	void updateTexture() {
+		tileImg = getTexture();
 	}
 	
 	public void draw (SpriteBatch sb, Vector2 boardStart, int arrayX, int arrayY) {

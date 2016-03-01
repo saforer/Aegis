@@ -16,5 +16,4 @@ public class Object {
 	public void draw (SpriteBatch sb, float x, float y) {
 		sb.draw(objImg, x + offset.x, y + offset.y, objImg.getWidth() * 2, objImg.getHeight() * 2);
 	}
-	
 }

@@ -8,21 +8,23 @@ import com.badlogic.gdx.math.Vector2;
 public class Tile {
 	//TODO: (Forer, 3/1/2016: Make this damn code ROW COLUMN not column row)
 	public Texture tileImg;
-	boolean isSelected;
+	public boolean isSelected;
 	public boolean highlightingTile;
 	static Texture emptyTile;
 	static Texture selected;
 	static Texture highlighted;
-	public Object heldObject;
+	public BoardObject heldObject;
+	public int x;
+	public int y;
 	
-	
-	public Tile () {
+	public Tile (int x, int y) {
 			if (emptyTile == null) {
 				emptyTile = new Texture("good-tile.png");
 				selected = new Texture("selected.png");
 				highlighted = new Texture("selected2.png");
 			}
-			
+			this.x = x;
+			this.y = y;			
 			updateTexture();
 	}
 	
@@ -32,25 +34,25 @@ public class Tile {
 		return emptyTile;
 	}
 	
-	void updateTexture() {
+	public void updateTexture() {
 		tileImg = getTexture();
 	}
 	
-	public void draw (SpriteBatch sb, Vector2 boardStart, int arrayX, int arrayY) {
-		float x, y;
+	public void draw (SpriteBatch sb, Vector2 boardStart) {
+		float flX, flY;
 		//Start out in the center
-		x = Gdx.graphics.getWidth() * boardStart.x;
+		flX = Gdx.graphics.getWidth() * boardStart.x;
 		//Make it go right in a row
-		x += (14 * 2) * arrayX;
+		flX += (14 * 2) * x;
 		//Make each new row start a little more to the left
-		x -= (12 * 2) * arrayY;
+		flX -= (12 * 2) * y;
 		//Start out in the center
-		y = Gdx.graphics.getHeight() * boardStart.y;
+		flY = Gdx.graphics.getHeight() * boardStart.y;
 		//Make it go down in a row
-		y -= (7 * 2) * arrayX;
+		flY -= (7 * 2) * x;
 		//Make each new row a little more down
-		y -= (6 * 2) * arrayY;
-		sb.draw(tileImg,  x,  y, tileImg.getWidth() * 2, tileImg.getHeight() * 2);
+		flY -= (6 * 2) * y;
+		sb.draw(tileImg,  flX,  flY, tileImg.getWidth() * 2, tileImg.getHeight() * 2);
 
 	}
 	

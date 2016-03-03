@@ -15,12 +15,14 @@ public class AegisOfTheLost extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		boardA = new Board(3, 3, new Vector2(.4f, .425f), true);
-		boardA.add(new Object("fighter.png", new Vector2(12, 12)), 0, 1);
-		boardA.add(new Object("mage.png", new Vector2(12, 12)), 2, 0);
-		boardA.add(new Object("healer.png", new Vector2(12, 8)), 2, 2);
+		boardA.add(new BoardObject("fighter.png", new Vector2(12, 12)), 0, 1);
+		boardA.add(new BoardObject("mage.png", new Vector2(12, 12)), 2, 0);
+		boardA.add(new BoardObject("healer.png", new Vector2(12, 8)), 2, 2);
 		boardB = new Board(3, 3, new Vector2(.6f, .585f), false);
-		boardB.add(new Object("malboro.png", new Vector2(-4, 0)), 1, 1);
-		boardB.add(new Object("templar.png", new Vector2(12, 12)), 2, 0);
+		boardB.add(new BoardObject("malboro.png", new Vector2(-4, 0)), 1, 1);
+		boardB.add(new BoardObject("templar.png", new Vector2(12, 12)), 2, 0);
+		boardA.create();
+		boardB.create();
 	}
 
 	@Override

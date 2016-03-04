@@ -56,20 +56,20 @@ public class Tile {
 
 	}
 	
-	public void drawObject (SpriteBatch sb, Vector2 boardStart, int arrayX, int arrayY) {
-		float x, y;
+	public void drawObject (SpriteBatch sb, Vector2 boardStart) {
+		float flX, flY;
 		//Start out in the center
-		x = Gdx.graphics.getWidth() * boardStart.x;
+		flX = Gdx.graphics.getWidth() * boardStart.x;
 		//Make it go right in a row
-		x += (14 * 2) * arrayX;
+		flX += (14 * 2) * x;
 		//Make each new row start a little more to the left
-		x -= (12 * 2) * arrayY;
+		flX -= (12 * 2) * y;
 		//Start out in the center
-		y = Gdx.graphics.getHeight() * boardStart.y;
+		flY = Gdx.graphics.getHeight() * boardStart.y;
 		//Make it go down in a row
-		y -= (7 * 2) * arrayX;
+		flY -= (7 * 2) * x;
 		//Make each new row a little more down
-		y -= (6 * 2) * arrayY;
-		if (heldObject != null) heldObject.draw(sb, x, y);
+		flY -= (6 * 2) * y;
+		if (heldObject != null) heldObject.draw(sb, flX, flY);
 	}
 }

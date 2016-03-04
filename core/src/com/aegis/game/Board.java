@@ -70,9 +70,11 @@ public class Board {
 		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				if (board[x][y].heldObject != null) board[x][y].drawObject(sb, boardPos, x, y);
+				if (board[x][y].heldObject != null) board[x][y].drawObject(sb, boardPos);
 			}
 		}
+		
+		currentAction.render(sb);
 	}
 	
 	public void update() {

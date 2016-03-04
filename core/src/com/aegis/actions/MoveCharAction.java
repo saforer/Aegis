@@ -1,6 +1,7 @@
 package com.aegis.actions;
 
 import com.aegis.game.Board;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MoveCharAction extends Action {
 	Board board;
@@ -22,6 +23,12 @@ public class MoveCharAction extends Action {
 	public void unload() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void render(SpriteBatch sb) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

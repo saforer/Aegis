@@ -12,6 +12,7 @@ public class MenuItem {
 	Texture icon;
 	static Texture baseTexture;
 	static Texture selectTexture;
+	public Runnable runThis;
 	boolean active;
 	String name;
 	MenuList parent;
@@ -53,12 +54,8 @@ public class MenuItem {
 		return false;
 	}
 	
-	void openUnderMenu() {
-		
-	}
-	
 	void doSomething() { 
-		
+		runThis.run();
 	}
 	
 	public void select() {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TempItem extends MenuItem {
 	Texture layeredIcon;
+
 	public TempItem(MenuList parent, String str) {
 		super("Move", parent);
 		type = ButtonType.actionHolder;

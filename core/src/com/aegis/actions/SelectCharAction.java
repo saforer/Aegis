@@ -35,9 +35,14 @@ public class SelectCharAction extends Action {
 		} else {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) menu.moveUp();
 			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) menu.moveDown();
-			if ((Gdx.input.isKeyJustPressed(Input.Keys.Z) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) 
-					&& menu.canGoRight()) {
-				menu = menu.goRight();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.Z) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+				if (menu.selectedOptionIsMenu()) {
+					if (menu.canGoRight()) {
+						menu = menu.goRight();
+					}
+				} else {
+					menu.doThing();
+				}
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.X) || Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 				if (menu.canGoLeft()) {

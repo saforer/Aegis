@@ -23,10 +23,21 @@ public class MenuList {
 	void fillList() {
 		TempItem t;
 		t = new TempItem(this, "moveAction.png");
+		
 		addMenuOption(t);		
 		t.select();
+		t.runThis = new Runnable() {
+			
+			@Override
+			public void run() {
+				System.out.println("Movement Time!");
+			}
+			
+		};
+		
 		t = new TempItem(this, "magicAction.png");
 		addMenuOption(t);
+				
 		t.childMenu = new MenuList(this);
 		t.type = ButtonType.menuHolder;
 		t.childMenu.addMenuOption(new TempItem(t.childMenu, "fireAction.png"));
@@ -117,16 +128,8 @@ public class MenuList {
 	public boolean canGoRight() {
 		System.out.println("GO RIGHT? Okay!!!");
 		if (menuOptions.get(menuIterator).type == ButtonType.menuHolder) {
-			
-			System.out.println("It's a menu holder!");
-			
-			if (menuOptions.get(menuIterator).childMenu != null) {
-				
-				System.out.println("there's a child menu!");
-				
+			if (menuOptions.get(menuIterator).childMenu != null) {				
 				if (menuOptions.get(menuIterator).childMenu.menuSize() > 0) {
-					
-					System.out.println("Child menu has elements in it!");
 					return true;
 				}
 			}
@@ -134,8 +137,19 @@ public class MenuList {
 		return false;
 	}
 	
+	public boolean selectedOptionIsMenu() {
+		if (menuOptions.get(menuIterator).type == ButtonType.menuHolder) return true;
+		return false;
+	}
+	
 	public MenuList goRight() {
 		return menuOptions.get(menuIterator).childMenu;
+	}
+	
+	public void doThing() {
+		if (menuOptions.get(menuIterator).runThis != null) {
+			menuOptions.get(menuIterator).doSomething();
+		}
 	}
 	
 	public boolean canGoLeft() {

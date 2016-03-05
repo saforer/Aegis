@@ -48,10 +48,12 @@ public class Board {
 	}
 	
 	public void create() {
-		state = enumState.selectingCharacter;
-		prevState = enumState.selectingCharacter;
-		currentAction = new SelectCharAction(this);
-		currentAction.create();
+		if (isControllable) {
+			state = enumState.selectingCharacter;
+			prevState = enumState.selectingCharacter;
+			currentAction = new SelectCharAction(this);
+			currentAction.create();
+		}
 	}
 	
 
@@ -74,37 +76,42 @@ public class Board {
 			}
 		}
 		
-		currentAction.render(sb);
+		if (currentAction != null) {
+			currentAction.render(sb);
+		}
+		
 	}
 	
 	public void update() {
-		if (prevState != state) {
-			//Deload old state
-			switch (prevState) {
-			default:
-				currentAction.unload();
-				break;			
-			}
-		
+		if (currentAction != null) {
+			if (prevState != state) {
+				//Deload old state
+				switch (prevState) {
+				default:
+					currentAction.unload();
+					break;			
+				}
 			
-			//Load new state
-			switch (state) {
-			default:
-				state = enumState.selectingCharacter;
-				break;
-			case selectingCharacter:
-				currentAction = new SelectCharAction(this);
-				currentAction.create();
-				break;
-			case movingCharacter:
-				currentAction = new MoveCharAction(this);
-				currentAction.create();
-				break;
+				
+				//Load new state
+				switch (state) {
+				default:
+					state = enumState.selectingCharacter;
+					break;
+				case selectingCharacter:
+					currentAction = new SelectCharAction(this);
+					currentAction.create();
+					break;
+				case movingCharacter:
+					currentAction = new MoveCharAction(this);
+					currentAction.create();
+					break;
+				}
 			}
+			
+			//Update for the states
+			currentAction.update();
 		}
-		
-		//Update for the states
-		currentAction.update();
 	}
 	
 	public List<BoardObject> getPlayers() {

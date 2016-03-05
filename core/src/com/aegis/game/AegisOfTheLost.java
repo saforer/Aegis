@@ -17,12 +17,10 @@ public class AegisOfTheLost extends ApplicationAdapter {
 	SpriteBatch batch;
 	Board boardA;
 	Board boardB;
-	MenuList menu;
 		
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		/*
 		
 		boardA = new Board(3, 3, new Vector2(.4f, .425f), true);
 		boardA.add(new BoardObject("fighter.png", new Vector2(12, 12)), 0, 1);
@@ -32,40 +30,18 @@ public class AegisOfTheLost extends ApplicationAdapter {
 		boardB.add(new BoardObject("malboro.png", new Vector2(-4, 0)), 1, 1);
 		boardB.add(new BoardObject("templar.png", new Vector2(12, 12)), 2, 0);
 		boardA.create();
-		boardB.create();
-		*/
-		
-		
-		
-		//MENU TEST!!!
-		menu = new MenuList("root");
-		for (int i = 0; i < 10; i++) {
-			menu.addMenuOption(new MenuItem("what", menu));
-		}
-		menu.selectStart();
+		boardB.create();		
 		
 	}
 
 	@Override
 	public void render () {
-		//boardA.update();
+		boardA.update();
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		/*
 		boardB.draw(batch);
 		boardA.draw(batch);
-		*/
-		update();
-		menu.draw(batch);
-		
 		batch.end();
-	}
-	
-	void update() {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) menu.moveUp();
-		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) menu.moveDown();
-		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && menu.canGoRight()) menu = menu.goRight();
-		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && menu.canGoLeft()) menu = menu.goLeft();
 	}
 }

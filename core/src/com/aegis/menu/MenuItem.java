@@ -37,15 +37,6 @@ public class MenuItem {
 		type = ButtonType.menuHolder;
 		icon = baseTexture;
 		this.parent = parent;
-		
-		//TEMPORARY FILL THE THING AS FAR AS I WANT!!!!
-		if (parent.distFromRoot() < 5) {
-			childMenu = new MenuList("child", parent);
-			for (int i = 0; i < 10; i++) {
-				childMenu.addMenuOption(new MenuItem("what", childMenu));
-			}
-			childMenu.selectStart();
-		}
 	}
 	
 	void staticFill() {

@@ -3,10 +3,11 @@ package com.aegis.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aegis.menu.ActionMenu;
 import com.aegis.menu.MenuItem;
+import com.aegis.menu.MenuList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +17,7 @@ public class AegisOfTheLost extends ApplicationAdapter {
 	SpriteBatch batch;
 	Board boardA;
 	Board boardB;
-	ActionMenu menu;
+	MenuList menu;
 		
 	@Override
 	public void create () {
@@ -37,11 +38,12 @@ public class AegisOfTheLost extends ApplicationAdapter {
 		
 		
 		//MENU TEST!!!
-		List<MenuItem> temp = new ArrayList<MenuItem>();
+		menu = new MenuList("root");
 		for (int i = 0; i < 10; i++) {
-			temp.add(new MenuItem());
+			menu.addMenuOption(new MenuItem("what", menu));
 		}
-		menu = new ActionMenu(temp);
+		menu.selectStart();
+		
 	}
 
 	@Override
@@ -54,9 +56,16 @@ public class AegisOfTheLost extends ApplicationAdapter {
 		boardB.draw(batch);
 		boardA.draw(batch);
 		*/
-		menu.updateMenu();
-		menu.drawMenu(batch);
+		update();
+		menu.draw(batch);
 		
 		batch.end();
+	}
+	
+	void update() {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) menu.moveUp();
+		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) menu.moveDown();
+		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && menu.canGoRight()) menu = menu.goRight();
+		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && menu.canGoLeft()) menu = menu.goLeft();
 	}
 }

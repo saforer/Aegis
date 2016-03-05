@@ -11,26 +11,19 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-enum enumState {
-	selectingCharacter,
-	movingCharacter
-}
+
 
 public class Board {
-	Tile[][] board;
+	public Tile[][] board;
 	int width;
 	int height;
 	Vector2 boardPos;
 	boolean isControllable;
-	boolean selecting;
-	int selectedTileX;
-	int selectedTileY;
-	boolean highlighting;
-	int highlightedX;
-	int highlightedY;
 	Action currentAction;
-	enumState state;
-	enumState prevState;
+	public static int selectedPlayerX;
+	public static int selectedPlayerY;
+	public static EnumState state;
+	EnumState prevState;
 	
 	public Board (int x, int y, Vector2 pos, boolean isControllable) {
 		width = x;
@@ -49,8 +42,8 @@ public class Board {
 	
 	public void create() {
 		if (isControllable) {
-			state = enumState.selectingCharacter;
-			prevState = enumState.selectingCharacter;
+			state = EnumState.selectingCharacter;
+			prevState = EnumState.selectingCharacter;
 			currentAction = new SelectCharAction(this);
 			currentAction.create();
 		}
@@ -96,7 +89,7 @@ public class Board {
 				//Load new state
 				switch (state) {
 				default:
-					state = enumState.selectingCharacter;
+					state = EnumState.selectingCharacter;
 					break;
 				case selectingCharacter:
 					currentAction = new SelectCharAction(this);
@@ -107,6 +100,8 @@ public class Board {
 					currentAction.create();
 					break;
 				}
+				
+				prevState = state;
 			}
 			
 			//Update for the states
@@ -121,6 +116,7 @@ public class Board {
 					if (board[i][j] != null) {
 						if (board[i][j].heldObject != null) {
 							output.add(board[i][j].heldObject);
+							System.out.println(" Found player at " + i + " " + j);
 						}
 					}
 					
@@ -129,79 +125,14 @@ public class Board {
 		return output;
 	}
 	
-	
-	
-	void moveUpdate() {
-		if (isControllable) {
-			//Left
-			if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && isInArray(selectedTileX-1,selectedTileY)) {
-				board[selectedTileX][selectedTileY].isSelected = false;
-				board[selectedTileX][selectedTileY].updateTexture();
-				selectedTileX--;
-				board[selectedTileX][selectedTileY].isSelected = true;
-				board[selectedTileX][selectedTileY].updateTexture();
-			}
-			
-			//Up
-			if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && isInArray(selectedTileX,selectedTileY-1)) {
-				board[selectedTileX][selectedTileY].isSelected = false;
-				board[selectedTileX][selectedTileY].updateTexture();
-				selectedTileY--;
-				board[selectedTileX][selectedTileY].isSelected = true;
-				board[selectedTileX][selectedTileY].updateTexture();
-			}
-			
-			//Right
-			if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && isInArray(selectedTileX+1,selectedTileY)) {
-				board[selectedTileX][selectedTileY].isSelected = false;
-				board[selectedTileX][selectedTileY].updateTexture();
-				selectedTileX++;
-				board[selectedTileX][selectedTileY].isSelected = true;
-				board[selectedTileX][selectedTileY].updateTexture();
-			}
-			
-			//Down
-			if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) && isInArray(selectedTileX,selectedTileY+1)) {
-				board[selectedTileX][selectedTileY].isSelected = false;
-				board[selectedTileX][selectedTileY].updateTexture();
-				selectedTileY++;
-				board[selectedTileX][selectedTileY].isSelected = true;
-				board[selectedTileX][selectedTileY].updateTexture();
-			}
-			
-			//X
-			if (Gdx.input.isKeyJustPressed(Input.Keys.Z) && !highlighting) {
-				//Highlighting
-				highlighting = true;
-				board[selectedTileX][selectedTileY].highlightingTile = true;
-				board[selectedTileX][selectedTileY].updateTexture();
-				highlightedX = selectedTileX;
-				highlightedY = selectedTileY;
-				
-							
-			} else if (Gdx.input.isKeyJustPressed(Input.Keys.Z) && highlighting) {
-				//Unhighlighting (so just moving)
-				highlighting = false;
-				board[highlightedX][highlightedY].highlightingTile = false;
-				board[highlightedX][highlightedY].updateTexture();
-				
-				Tile from = board[highlightedX][highlightedY];
-				Tile to = board[selectedTileX][selectedTileY];
-				
-				/*				Null	Not Null
-				 * Going FROM	No		Yes
-				 * Going TO		Yes		No
-				 */
-				
-				if (from.heldObject != null && to.heldObject == null) {
-					to.heldObject = from.heldObject;
-					from.heldObject = null;
-				}
-			}
-		}
+	public static void goToMove(int X, int Y) {
+		selectedPlayerX = X;
+		selectedPlayerY = Y;
+		state = EnumState.movingCharacter;
 	}
 	
-	boolean isInArray(int x, int y) {
+	
+	public boolean isInArray(int x, int y) {
 		if (x >= width) return false;
 		if (y >= height) return false;
 		if (x < 0) return false;

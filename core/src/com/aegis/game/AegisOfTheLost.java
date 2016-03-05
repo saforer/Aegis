@@ -31,7 +31,6 @@ public class AegisOfTheLost extends ApplicationAdapter {
 		boardB.add(new BoardObject("templar.png", new Vector2(12, 12)), 2, 0);
 		boardA.create();
 		boardB.create();		
-		
 	}
 
 	@Override

@@ -80,7 +80,8 @@ public class SelectCharAction extends Action {
 
 	@Override
 	public void unload() {
-
+		Board.selectedPlayerX = players.get(playerIterator).getParentTile().x;
+		Board.selectedPlayerY = players.get(playerIterator).getParentTile().y;
 	}
 	
 	@Override

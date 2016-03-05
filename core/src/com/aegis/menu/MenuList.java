@@ -3,6 +3,8 @@ package com.aegis.menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aegis.game.Board;
+import com.aegis.game.EnumState;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MenuList {
@@ -30,10 +32,13 @@ public class MenuList {
 			
 			@Override
 			public void run() {
-				System.out.println("Movement Time!");
+				Board.state = EnumState.movingCharacter;
 			}
 			
 		};
+		
+		
+		
 		
 		t = new TempItem(this, "magicAction.png");
 		addMenuOption(t);

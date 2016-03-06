@@ -56,7 +56,7 @@ public class Tile {
 
 	}
 	
-	public void drawObject (SpriteBatch sb, Vector2 boardStart) {
+	public void drawObject (SpriteBatch sb, Vector2 boardStart, float dt) {
 		float flX, flY;
 		//Start out in the center
 		flX = Gdx.graphics.getWidth() * boardStart.x;
@@ -70,6 +70,6 @@ public class Tile {
 		flY -= (7 * 2) * x;
 		//Make each new row a little more down
 		flY -= (6 * 2) * y;
-		if (heldObject != null) heldObject.draw(sb, flX, flY);
+		if (heldObject != null) heldObject.draw(sb, flX, flY, dt);
 	}
 }

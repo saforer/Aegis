@@ -1,15 +1,8 @@
 package com.aegis.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.aegis.menu.MenuItem;
-import com.aegis.menu.MenuList;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -23,12 +16,12 @@ public class AegisOfTheLost extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		
 		boardA = new Board(3, 3, new Vector2(.4f, .425f), true);
-		boardA.add(new BoardObject("fighter.png", new Vector2(12, 12)), 0, 1);
-		boardA.add(new BoardObject("mage.png", new Vector2(12, 12)), 2, 0);
-		boardA.add(new BoardObject("healer.png", new Vector2(12, 8)), 2, 2);
+		boardA.add(new BoardObject(new String[]{"fighter1.png", "fighter2.png", "fighter3.png", "fighter4.png"}, new Vector2(12, 12)), 0, 1);
+		boardA.add(new BoardObject(new String[]{"mage1.png", "mage2.png", "mage3.png", "mage4.png"}, new Vector2(12, 12)), 2, 0);
+		boardA.add(new BoardObject(new String[]{"red1.png", "red2.png", "red3.png", "red4.png"}, new Vector2(12, 8)), 2, 2);
 		boardB = new Board(3, 3, new Vector2(.6f, .585f), false);
-		boardB.add(new BoardObject("malboro.png", new Vector2(-4, 0)), 1, 1);
-		boardB.add(new BoardObject("templar.png", new Vector2(12, 12)), 2, 0);
+		boardB.add(new BoardObject(new String[]{"malboro1.png", "malboro2.png", "malboro3.png", "malboro4.png"}, new Vector2(-4, 0)), 1, 1);
+		boardB.add(new BoardObject(new String[]{"defender1.png", "defender2.png", "defender3.png", "defender4.png"}, new Vector2(12, 12)), 2, 0);
 		boardA.create();
 		boardB.create();		
 	}

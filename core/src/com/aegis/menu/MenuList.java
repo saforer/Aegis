@@ -24,7 +24,7 @@ public class MenuList {
 	
 	void fillList() {
 		TempItem t;
-		t = new TempItem(this, "moveAction.png");
+		t = new TempItem(this, "move-overlay.png");
 		
 		addMenuOption(t);		
 		t.select();
@@ -40,7 +40,7 @@ public class MenuList {
 		
 		
 		
-		t = new TempItem(this, "magicAction.png");
+		t = new TempItem(this, "magic-overlay.png");
 		addMenuOption(t);
 				
 		t.childMenu = new MenuList(this);
@@ -58,7 +58,7 @@ public class MenuList {
 		t.childMenu.menuOptions.get(0).select();
 		
 		
-		t = new TempItem(this, "fightAction.png");
+		t = new TempItem(this, "attack-overlay.png");
 		addMenuOption(t);
 		t.childMenu = new MenuList(this);
 		t.type = ButtonType.menuHolder;
@@ -87,7 +87,7 @@ public class MenuList {
 		tempItem.childMenu.addMenuOption(new TempItem(tempItem.childMenu, "trapLightningAction.png"));
 		tempItem.childMenu.menuOptions.get(0).select();
 		
-		t = new TempItem(this, "shieldAction.png");
+		t = new TempItem(this, "defend-overlay.png");
 		addMenuOption(t);
 		t = new TempItem(this, "waitAction.png");
 		addMenuOption(t);

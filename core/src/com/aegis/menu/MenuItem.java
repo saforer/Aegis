@@ -42,8 +42,8 @@ public class MenuItem {
 	
 	void staticFill() {
 		if (baseTexture == null) {
-			baseTexture = new Texture("baseAction.png");
-			selectTexture = new Texture("selectedAction.png");
+			baseTexture = new Texture("base-icon-unselected.png");
+			selectTexture = new Texture("base-icon-selected.png");
 		}
 	}
 	

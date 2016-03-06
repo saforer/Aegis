@@ -7,7 +7,6 @@ import com.aegis.actions.Action;
 import com.aegis.actions.MoveCharAction;
 import com.aegis.actions.SelectCharAction;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -65,7 +64,7 @@ public class Board {
 		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				if (board[x][y].heldObject != null) board[x][y].drawObject(sb, boardPos);
+				if (board[x][y].heldObject != null) board[x][y].drawObject(sb, boardPos, Gdx.graphics.getDeltaTime());
 			}
 		}
 		

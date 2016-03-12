@@ -3,70 +3,119 @@ package com.aegis.menu;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-enum ButtonType {
-	menuHolder,
-	actionHolder
+enum menu {
+    move,
+    fight,
+    magic,
+    defend,
+    wait,
+    fire
+}
+
+enum menuState {
+    menu,
+    action
 }
 
 public class MenuItem {
-	Texture icon;
-	static Texture baseTexture;
-	static Texture selectTexture;
-	public Runnable runThis;
-	boolean active;
-	String name;
-	MenuList parent;
-	MenuList childMenu;
-	ButtonType type;
-	
-	public MenuItem (String name, MenuList parent, MenuList childMenu) {
-		//See if statics are blank
-		staticFill();
-		
-		this.name = name;
-		this.childMenu = childMenu;
-		type = ButtonType.menuHolder;
-		this.parent = parent; 
-		icon = baseTexture;
-	}
-	
-	public MenuItem (String name, MenuList parent) {
-		//See if statics are blank
-		staticFill();
-		
-		this.name = name;
-		type = ButtonType.menuHolder;
-		icon = baseTexture;
-		this.parent = parent;
-	}
-	
-	void staticFill() {
-		if (baseTexture == null) {
-			baseTexture = new Texture("base-icon-unselected.png");
-			selectTexture = new Texture("base-icon-selected.png");
-		}
-	}
-	
-	public boolean isMenu() {
-		if (type == ButtonType.menuHolder && childMenu != null) {
-			if (childMenu.menuSize() > 0) return true;
-		}
-		return false;
-	}
-	
-	void doSomething() { 
-		runThis.run();
-	}
-	
-	public void select() {
-		icon = selectTexture;
-	}
-	
-	public void unSelect() {
-		icon = baseTexture;
-	}
-	
-	public void draw(SpriteBatch sb, int x, int y) {
-		sb.draw(icon, x * icon.getWidth(), y * icon.getHeight());
-	}
+    menuState mst;
+    Texture icon;
+    Texture personalIcon;
+    static Texture baseTexture;
+    static Texture selectedTexture;
+    boolean selected;
+    MenuList parent;
+    MenuList child;
+
+    public MenuItem (menu m) {
+        fillStatic();
+        updateIcon();
+        getItem(m);
+        mst = menuState.action;
+    }
+
+    public boolean isMenu() {
+        if (mst == menuState.menu) {
+            if (child != null) {
+                if (child.menuOptions.size() > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isAction() {
+        if (mst == menuState.action) {
+            return true;
+        }
+        return false;
+    }
+
+    public void doAction() {
+        MenuManager.currentMenu = null;
+    }
+
+    public void makeMenu() {
+        child = new MenuList(parent);
+        mst = menuState.menu;
+    }
+
+    public void addMenuItem(MenuItem subT) {
+        child.addMenuItem(subT);
+    }
+
+    void getItem(menu m) {
+        switch (m) {
+            default:
+            case move:
+                personalIcon = new Texture("move-overlay.png");
+                break;
+            case fight:
+                personalIcon = new Texture("attack-overlay.png");
+                break;
+            case magic:
+                personalIcon = new Texture("magic-overlay.png");
+                break;
+            case defend:
+                personalIcon = new Texture("defend-overlay.png");
+                break;
+            case wait:
+                personalIcon = new Texture("waitAction.png");
+                break;
+            case fire:
+                personalIcon = new Texture("fireAction.png");
+                break;
+        }
+    }
+
+    void updateIcon() {
+        if (selected) {
+            icon = selectedTexture;
+        } else {
+            icon = baseTexture;
+        }
+    }
+
+    void fillStatic() {
+        if (baseTexture == null) {
+            baseTexture = new Texture("base-icon-unselected.png");
+            selectedTexture = new Texture("base-icon-selected.png");
+        }
+    }
+
+    public void render(SpriteBatch sb, int x, int y) {
+        sb.draw(icon, x * 32, y * 32);
+        sb.draw(personalIcon, x * 32, y * 32);
+    }
+
+    public void select() {
+        selected = true;
+        updateIcon();
+    }
+
+    public void unSelect() {
+        selected = false;
+        updateIcon();
+    }
 }

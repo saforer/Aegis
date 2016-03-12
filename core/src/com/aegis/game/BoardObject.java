@@ -1,54 +1,83 @@
 package com.aegis.game;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+
+enum job {
+    fighter,
+    mage,
+    redmage,
+    defender,
+    malboro
+}
 
 public class BoardObject {
-	Texture objImg;
-	Texture[] objImages;
-	int animationFrame;
-	float count;
-	Vector2 offset;
-	public Tile parentTile;
-	
-	public BoardObject(String str, Vector2 offset) {
-		objImg = new Texture(str);		
-		this.offset = offset;
-	}
-	
-	public BoardObject(String[] str, Vector2 offset) {
-		animationFrame = 0;
-		count = 0f;
-		objImages = new Texture[str.length];
-		for (int i = 0; i < str.length; i++) {
-			objImages[i] = new Texture(str[i]);
-		}
-		objImg = objImages[0];
-				
-		this.offset = offset;
-	}
-	
-	public void draw (SpriteBatch sb, float x, float y, float dt) {
-		if (objImages != null) {
-			if (count >= .5f) {
-				count = 0f;
-				objImg = frameAdvance();
-			} else {
-				count += dt;
-			}
-		}
-		
-		sb.draw(objImg, x + offset.x, y + offset.y, objImg.getWidth() * 2, objImg.getHeight() * 2);
-	}
-	
-	Texture frameAdvance() {
-		animationFrame++;
-		if (animationFrame > objImages.length-1) animationFrame = 0;
-		return objImages[animationFrame];
-	}
-	
-	public Tile getParentTile() {
-		return parentTile;
-	}
+    public boolean exhausted = false;
+    Texture img;
+    Texture[] imgs;
+    int offsetX;
+    int offsetY;
+    int frame;
+    float count;
+    Tile parent;
+
+
+    public BoardObject(job anim) {
+        getImgs(anim);
+        img = imgs[0];
+    }
+
+    void getImgs(job anim) {
+        String[] whatTexturesToUse;
+        switch(anim) {
+            default:
+            case fighter:
+                whatTexturesToUse = new String[]{"fighter1.png", "fighter2.png", "fighter3.png", "fighter4.png"};
+                offsetX = 6;
+                offsetY = 6;
+                break;
+            case mage:
+                whatTexturesToUse = new String[]{"mage1.png", "mage2.png", "mage3.png", "mage4.png"};
+                offsetX = 6;
+                offsetY = 6;
+                break;
+            case redmage:
+                whatTexturesToUse = new String[]{"red1.png", "red2.png", "red3.png", "red4.png"};
+                offsetX = 6;
+                offsetY = 6;
+                break;
+            case defender:
+                whatTexturesToUse = new String[]{"defender1.png","defender2.png","defender3.png","defender4.png"};
+                offsetX = 6;
+                offsetY = 6;
+                break;
+            case malboro:
+                whatTexturesToUse = new String[]{"malboro1.png","malboro2.png","malboro3.png","malboro4.png"};
+                offsetX = 0;
+                offsetY = 0;
+                break;
+        }
+        imgs = new Texture[whatTexturesToUse.length];
+        for (int i = 0; i < whatTexturesToUse.length; i++) {
+            imgs[i] = new Texture(whatTexturesToUse[i]);
+        }
+    }
+
+    public void update (float dt) {
+        if (count > .12f) {
+            frame++;
+            if (frame > imgs.length-1) frame = 0;
+            img = imgs[frame];
+            count = 0;
+        } else {
+            count+= dt;
+        }
+    }
+
+    public void setParent(Tile parent) {
+        this.parent = parent;
+    }
+
+    public Tile getParent() {
+        return parent;
+    }
 }

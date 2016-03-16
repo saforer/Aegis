@@ -1,10 +1,11 @@
 package com.aegis.actions;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 public abstract class Action {
-	public abstract void create();
-	public abstract void update();
-	public abstract void unload();
-	public abstract void render(SpriteBatch sb);
+	public boolean[][] shapeOfTarget;
+	public int focalX, focalY;
+
+	public abstract void targetUpdate();
+	public abstract boolean doneTargetting();
+	public abstract void doAction();
+	public abstract void cleanup();
 }

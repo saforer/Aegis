@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Board {
     Tile[][] tileGrid;
-    int width;
-    int height;
+    public int width;
+    public int height;
 
     public Board (int width, int height) {
         this.width = width;
@@ -53,6 +53,10 @@ public class Board {
             }
         }
         return output;
+    }
+
+    public Tile[][] getTileGrid() {
+        return tileGrid;
     }
 
     public List<BoardObject> getObjectOnBoard() {

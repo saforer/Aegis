@@ -50,6 +50,10 @@ public class MenuManager {
 
     }
 
+    public static boolean isOnAction() {
+        return currentMenu.onAction();
+    }
+
     public static int depth() {
         return currentMenu.depth();
     }
@@ -60,5 +64,9 @@ public class MenuManager {
 
     public static void render(SpriteBatch sb) {
         if (currentMenu != null) currentMenu.render(sb);
+    }
+
+    public static void closeMenu() {
+        currentMenu = null;
     }
 }

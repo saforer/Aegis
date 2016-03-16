@@ -19,6 +19,7 @@ public class BoardObject {
     int frame;
     float count;
     Tile parent;
+    public String name;
 
 
     public BoardObject(job anim) {
@@ -34,26 +35,31 @@ public class BoardObject {
                 whatTexturesToUse = new String[]{"fighter1.png", "fighter2.png", "fighter3.png", "fighter4.png"};
                 offsetX = 6;
                 offsetY = 6;
+                name = "fighter";
                 break;
             case mage:
                 whatTexturesToUse = new String[]{"mage1.png", "mage2.png", "mage3.png", "mage4.png"};
                 offsetX = 6;
                 offsetY = 6;
+                name = "mage";
                 break;
             case redmage:
                 whatTexturesToUse = new String[]{"red1.png", "red2.png", "red3.png", "red4.png"};
                 offsetX = 6;
                 offsetY = 6;
+                name = "redMage";
                 break;
             case defender:
                 whatTexturesToUse = new String[]{"defender1.png","defender2.png","defender3.png","defender4.png"};
                 offsetX = 6;
                 offsetY = 6;
+                name = "defender";
                 break;
             case malboro:
                 whatTexturesToUse = new String[]{"malboro1.png","malboro2.png","malboro3.png","malboro4.png"};
                 offsetX = 0;
                 offsetY = 0;
+                name = "malboro";
                 break;
         }
         imgs = new Texture[whatTexturesToUse.length];

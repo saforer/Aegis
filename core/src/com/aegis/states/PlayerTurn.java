@@ -1,5 +1,8 @@
 package com.aegis.states;
 
+import com.aegis.actions.Action;
+import com.aegis.actions.ActionEnum;
+import com.aegis.actions.ActionFactory;
 import com.aegis.game.Board;
 import com.aegis.game.BoardManager;
 import com.aegis.game.BoardObject;
@@ -9,14 +12,18 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by Forer on 3/11/2016.
  */
-public class PlayerCharacterSelect extends State{
+public class PlayerTurn extends State{
     Board boardToCheck;
     List<BoardObject> playerList;
     int playerIterator = 0;
+    Stack<State> turnOrder;
+    Action currentAction;
+
     @Override
     public void load() {
         boardToCheck = BoardManager.getBoard(0, true);
@@ -41,16 +48,28 @@ public class PlayerCharacterSelect extends State{
 
 
     void controls() {
-        if (!MenuManager.isMenuOpen()) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) moveUp();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) moveDown();
-
-            if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) selectCharacter();
+        if (currentAction != null) {
+            //OPERATE ACTION
+            if (!currentAction.doneTargetting()) {
+                currentAction.targetUpdate();
+            } else {
+                currentAction.doAction();
+                currentAction.cleanup();
+                currentAction = null;
+            }
         } else {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) MenuManager.menuUp();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) MenuManager.menuDown();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && MenuManager.menuCanRight()) MenuManager.menuRight();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && MenuManager.menuCanLeft()) MenuManager.menuLeft();
+            if (!MenuManager.isMenuOpen()) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) moveUp();
+                if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT))
+                    moveDown();
+
+                if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) selectCharacter();
+            } else {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) MenuManager.menuUp();
+                if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) MenuManager.menuDown();
+                if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) rightMenu();
+                if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && MenuManager.menuCanLeft()) MenuManager.menuLeft();
+            }
         }
     }
 
@@ -75,6 +94,18 @@ public class PlayerCharacterSelect extends State{
             playerList.get(playerIterator).getParent().unSelect();
             playerIterator = playerList.size() -1;
             playerList.get(playerIterator).getParent().select();
+        }
+    }
+
+    void rightMenu() {
+        if (MenuManager.menuCanRight()) {
+            if (MenuManager.isOnAction()) {
+                MenuManager.closeMenu();
+                currentAction = ActionFactory.getActionFromEnum(ActionEnum.fart);
+            } else {
+                //navigate menu
+                MenuManager.menuRight();
+            }
         }
     }
 

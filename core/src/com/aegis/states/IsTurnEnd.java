@@ -40,7 +40,7 @@ public class IsTurnEnd extends State {
                 }
             }
             //Someone's not exhausted.
-            StateManager.loadState(new PlayerCharacterSelect());
+            StateManager.loadState(new PlayerTurn());
         }
 
     }

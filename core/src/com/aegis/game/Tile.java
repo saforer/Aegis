@@ -66,15 +66,14 @@ public class Tile {
     }
 
     public void draw(SpriteBatch sb, boolean friendly) {
-        float flX, flY;
-        //Start out in the center
-        flX = Gdx.graphics.getWidth()/2;
+        float flX = 0;
+        float flY = 0;
+        float zoom = 4;
         //Make it go right in a row
         flX += 14 * x;
         //Make each new row start a little more to the left
         flX -= 12 * y;
-        //Start out in the center
-        flY = Gdx.graphics.getHeight()/2;
+
         //Make it go down in a row
         flY -= 7 * x;
         //Make each new row a little more down
@@ -84,22 +83,30 @@ public class Tile {
             flX -= 39;
             flY -= 20;
         }
-        sb.draw(img,  flX,  flY);
+
+        flX *= zoom;
+        flY *= zoom;
+        //Start out in the center
+        flX += Gdx.graphics.getWidth()/2;
+        //Start out in the center
+        flY += Gdx.graphics.getHeight()/2;
+
+
+        sb.draw(img,  flX,  flY, img.getWidth() * zoom, img.getHeight() * zoom);
     }
 
     public void drawObject(SpriteBatch sb, boolean friendly) {
         if (heldObject == null) {
             return;
         }
-        float flX, flY;
-        //Start out in the center
-        flX = Gdx.graphics.getWidth()/2;
+        float flX = 0;
+        float flY = 0;
+        float zoom = 4;
         //Make it go right in a row
         flX += 14 * x;
         //Make each new row start a little more to the left
         flX -= 12 * y;
-        //Start out in the center
-        flY = Gdx.graphics.getHeight()/2;
+
         //Make it go down in a row
         flY -= 7 * x;
         //Make each new row a little more down
@@ -109,6 +116,15 @@ public class Tile {
             flX -= 39;
             flY -= 20;
         }
-        sb.draw(heldObject.img, flX + heldObject.offsetX,  flY + heldObject.offsetY);
+
+        flX *= zoom;
+        flY *= zoom;
+        //Start out in the center
+        flX += Gdx.graphics.getWidth()/2;
+        //Start out in the center
+        flY += Gdx.graphics.getHeight()/2;
+
+        sb.draw(heldObject.img, flX + (heldObject.offsetX * zoom),  flY + (heldObject.offsetY * zoom), heldObject.img.getWidth() * zoom, heldObject.img.getHeight() * zoom);
+
     }
 }

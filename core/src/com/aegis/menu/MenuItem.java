@@ -1,5 +1,6 @@
 package com.aegis.menu;
 
+import com.aegis.actions.ActionEnum;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -26,6 +27,7 @@ public class MenuItem {
     boolean selected;
     MenuList parent;
     MenuList child;
+    ActionEnum action;
 
     public MenuItem (menu m) {
         fillStatic();
@@ -70,6 +72,7 @@ public class MenuItem {
             default:
             case move:
                 personalIcon = new Texture("move-overlay.png");
+                action = ActionEnum.move;
                 break;
             case fight:
                 personalIcon = new Texture("attack-overlay.png");
@@ -85,6 +88,7 @@ public class MenuItem {
                 break;
             case fire:
                 personalIcon = new Texture("fireAction.png");
+                action = ActionEnum.fart;
                 break;
         }
     }

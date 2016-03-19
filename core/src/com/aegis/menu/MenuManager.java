@@ -1,5 +1,6 @@
 package com.aegis.menu;
 
+import com.aegis.actions.ActionEnum;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -48,6 +49,10 @@ public class MenuManager {
             }
         }
 
+    }
+
+    public static ActionEnum getActionEnum() {
+        return currentMenu.getActionEnum();
     }
 
     public static boolean isOnAction() {

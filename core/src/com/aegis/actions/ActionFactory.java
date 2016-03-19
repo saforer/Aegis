@@ -16,6 +16,8 @@ public class ActionFactory {
             default:
             case fart:
             return new Fart();
+            case move:
+                return new MoveAction();
         }
     }
 }

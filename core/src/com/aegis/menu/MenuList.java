@@ -1,5 +1,6 @@
 package com.aegis.menu;
 
+import com.aegis.actions.ActionEnum;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
@@ -98,6 +99,10 @@ public class MenuList {
 
     public MenuList right() {
         return menuOptions.get(menuIterator).child;
+    }
+
+    public ActionEnum getActionEnum() {
+        return menuOptions.get(menuIterator).action;
     }
 
     public int depth() {

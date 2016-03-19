@@ -14,6 +14,10 @@ public class StateManager {
         return i;
     }
 
+    public static State getCurrentState() {
+        return currentState;
+    }
+
     public StateManager() {
         loadState(new IsTurnEnd());
     }

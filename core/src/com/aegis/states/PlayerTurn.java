@@ -1,7 +1,6 @@
 package com.aegis.states;
 
 import com.aegis.actions.Action;
-import com.aegis.actions.ActionEnum;
 import com.aegis.actions.ActionFactory;
 import com.aegis.game.Board;
 import com.aegis.game.BoardManager;
@@ -12,16 +11,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Created by Forer on 3/11/2016.
  */
-public class PlayerTurn extends State{
+public class PlayerTurn extends State {
     Board boardToCheck;
-    List<BoardObject> playerList;
-    int playerIterator = 0;
-    Stack<State> turnOrder;
+    public List<BoardObject> playerList;
+    public int playerIterator = 0;
     Action currentAction;
 
     @Override
@@ -100,8 +97,9 @@ public class PlayerTurn extends State{
     void rightMenu() {
         if (MenuManager.menuCanRight()) {
             if (MenuManager.isOnAction()) {
+                currentAction = ActionFactory.getActionFromEnum(MenuManager.getActionEnum());
                 MenuManager.closeMenu();
-                currentAction = ActionFactory.getActionFromEnum(ActionEnum.fart);
+                currentAction.startAction();
             } else {
                 //navigate menu
                 MenuManager.menuRight();

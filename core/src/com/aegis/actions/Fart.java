@@ -17,15 +17,11 @@ public class Fart extends Action {
     Board boardVs;
     @Override
     public void targetUpdate() {
-        if (!targetStarted) {
-            startTargetting();
-        } else {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) targetUp();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) targetDown();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) targetLeft();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) targetRight();
-            if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) targetSelection();
-        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) targetUp();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) targetDown();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) targetLeft();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) targetRight();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) targetSelection();
     }
 
     void startTargetting() {
@@ -63,6 +59,14 @@ public class Fart extends Action {
             selectedY--;
             selectTile();
         }
+    }
+
+    @Override
+    public void startAction() {
+        boardVs = BoardManager.getBoard(0,false);
+        tilesInBoard = boardVs.getTileGrid();
+        selectTile();
+        targetStarted = true;
     }
 
     void targetLeft() {
